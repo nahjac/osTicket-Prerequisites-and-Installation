@@ -13,3 +13,5 @@ osTicket is a MORE
 # List of Prerequisites
 + Azure Virtual Machine
 + osTicket Installation files
+# Installation Steps
+

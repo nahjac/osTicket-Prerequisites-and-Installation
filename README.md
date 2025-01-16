@@ -36,3 +36,19 @@ Now we will enable extensions in IIS. While in IIS > Sites > Default Web Site > 
 + php_opcache.dll
 *pic of extensions enabled*
 Refresh the oSTicket site in your web browser and you should now see a green check next to Intl Extension. Now navigate to C:\inetpub\wwwroot\oSTicket\include\ost-sampleconfig.php and rename the file to C:\inetpub\wwwroot\oSTicket\include\ost-config.php.
+*pic of changing name*
+Next, assign permissions to ost-config.php by right-clicking the file and open Properties > Security > Advanced > Permissions. Click Disable inheritance > Remove all inherited permissions from this object.
+*pic of removing inheritance*
+While still in the Permissions settings of ost-config.php, click Add > Principal and type in "Everyone". Check the names then click OK. Allow everyone full control by ensuring all boxes are checked. Apply the changes.
+*pic*
+Now we will continue setting up osTicket from within the web browser using the following parameters.
+*pic of correct parameters (name: helpdesk email: helpdesk@osticket.com first: mary last: jane email: admin@osticket.com username: user_admin password: Password1*
+Now let's download and install HeidiSQL (HeidiSQL_12.3.0.6589_Setup.exe). HeidiSQL is an open-source admin tool for managing databases. We'll be using it to manage MORE. User: root Password: Password1. Select Open and on the left side right-click Unnamed > Create New > Database. Name it osTicket and click OK.
+*pic of renaming it*
+Let's finish setting up osTicket. In the web browser finish filling out the fields:
+*pic of correct parameters (MYSQL Database: osTicket (that you just created in heidi) MYSQL username: root MySQL pw: Password1)
+Finish by clicking "Install Now".
+Congrats! osTicket has been successfully installed.
+Don't forget to complete some post-installation cleanup. First, delete C:\inetpub\wwwroot\osTicket\setup. Next, navigate to C:\inetpub\wwwroot\osTicket\include. Right-click on ost-config.php and select Security > Advanced > "everyone" > edit to change permissions. Allow everyone to only have read and execute permissions.
+*pic of read and execute permissions*
+For information on post-installation configuration, see pt. 2 [here](

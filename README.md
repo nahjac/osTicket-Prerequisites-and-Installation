@@ -9,15 +9,30 @@ osTicket is an open-source ticketing system used by businesses for managing cust
 + Internet Information Services (IIS)
 + Heidi SQL
 # Operating Systems Used
-+ Windows 10 (21H2)
++ Windows 10 (Build 19044)
 # List of Prerequisites
 + Azure Virtual Machine
 + osTicket Installation files
 # Installation Steps
-Within the Azure interface, create a resource group and name it "osTickets". I used the US East region but you can choose whichever one best fits your needs. Just ensure that your VM and other resources are all within the same region. Within that RG, create a Windows 10 VM and has a size of 4vCPUs. Name it "VM-osTicket". 
+Within the Azure interface, create a resource group and name it "osTickets". I used the US East region but you can choose whichever one best fits your needs. Just ensure that your VM and other resources are all within the same region. Within that RG, create a Windows 10 VM that has 2-4vCPUs. Name it "VM-osTicket". 
 *pic of vm parameters*
-Create a username and password for the VM. For training purposes you can keep it basic. For the username I chose "labuser". Once the VM is deployed, we will connect to it using a Remote Desktop connection. Navigate to the VM and make note of its public IP address. For me, the IP address is "MORE". This will be used to connect to the VM via Remote Desktop.
-*pic of remote desktop logging in*
-After connecting, it's time to enable Internet Information Services (IIS). IIS is a web server for Windows that's used to exchange static and dynamic web content with internet users. It can be used to host, deploy, and manage different web applications. To enable IIS: Start Menu > Windows Features > Internet Information Services > World Wide Web Services > Application Development Features > CGI. 
+Create a username and password for the VM. For training purposes you can keep it basic. For the username I chose "labuser". Once the VM is deployed, we will connect to it using a Remote Desktop connection. From the Start menu, open up Remote Desktop Connection and connect to the VM that was created in Azure.
+*pic of remote desktop connection with vm selected*
+After connecting, it's time to enable Internet Information Services (IIS). IIS is a web server for Windows that's used to exchange static and dynamic web content with internet users. It can be used to host, deploy, and manage different web applications. To enable IIS: Start Menu > Windows Features > Internet Information Services > World Wide Web Services > Application Development Features > CGI. CGI will be necessary for downloading the PHP Manager which will allow us to run osTicket within our IIS web server.
 *pic of windows features*
-Now that IIS is enabled, [download](https://drive.google.com/drive/u/0/folders/1APMfNyfNzcxZC6EzdaNfdZsUwxWYChf6) the installation files for osTicket and HeidiSQL. 
+From within the installation folder, download the PHP manager file (PHPManagerForIIS_V1.5.0.msi). Run the installer and agree to all the terms. Follow the same steps now with the Rewrite Module file (rewrite_amd64_en-US.msi). 
+*pic of both installers*
+Create a directory named "C:\PHP" by opening the File Explorer. Navigate to the C:\ drive and right-click to create a new folder named "PHP". From within the Installation Files folder, download the zip file "php-7.3.8-nts-Win32-VC15-x86.zip". Extract the files to the PHP folder you just created. 
+*pic of files extracted in php folder*
+Now, download and install the VC_redist executable file. Then you'll download and install MySQL (mysql-5.5.62-win32.msi). Allow typical setup and it will bring you to a page where you will create a username and password for the database you'll be using to store ticket information from oSTicket. To keep things simple I chose "root" for the username and "Password1" for the password. 
+*pic of creating username and pw*
+Now it's time to download oSTicket which is "osTicket-v1.15.8.zip" in the installation files folder. Once it's downloaded, extract the contents and copy the "upload" folder into C:\ inetpub\wwwroot. Then rename the copied folder "oSTicket". Now open the IIS Manager and restart the server.
+*pic of where to start and stop*
+On the left-hand side underneath Connections, select the VM > Sites > Default Web Site > oSTicket. On the right-hand side click "Browse *:80".
+*pic of this on the right side*
+Now we will enable extensions in IIS. While in IIS > Sites > Default Web Site > oSTicket, double-click PHP Manager. At the bottom click "Enable or Disable an Extension". Right-click and enable the extensions:
++ php_imap.dll
++ php_intl.dll
++ php_opcache.dll
+*pic of extensions enabled*
+Refresh the oSTicket site in your web browser and you should now see a green check next to Intl Extension. Now navigate to C:\inetpub\wwwroot\oSTicket\include\ost-sampleconfig.php and rename the file to C:\inetpub\wwwroot\oSTicket\include\ost-config.php.

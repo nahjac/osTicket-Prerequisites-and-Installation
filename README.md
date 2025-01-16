@@ -51,4 +51,4 @@ Finish by clicking "Install Now".
 Congrats! osTicket has been successfully installed.
 Don't forget to complete some post-installation cleanup. First, delete C:\inetpub\wwwroot\osTicket\setup. Next, navigate to C:\inetpub\wwwroot\osTicket\include. Right-click on ost-config.php and select Security > Advanced > "everyone" > edit to change permissions. Allow everyone to only have read and execute permissions.
 *pic of read and execute permissions*
-For information on post-installation configuration, see pt. 2 [here](
+For information on post-installation configuration, see pt. 2 [here](https://github.com/nahjac/osTicket-Post-Installation-Configuration).

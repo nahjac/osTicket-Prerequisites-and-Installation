@@ -12,7 +12,7 @@ osTicket is an open-source ticketing system used by businesses for managing cust
 + Windows 10 (22H2)
 # List of Prerequisites
 + Azure Virtual Machine
-+ osTicket Installation files
++ [osTicket Installation files](https://drive.google.com/drive/u/0/folders/1APMfNyfNzcxZC6EzdaNfdZsUwxWYChf6)
 # Installation Steps
 Within the Azure interface, create a resource group and name it "osTickets". I used the US East region but you can choose whichever one best fits your needs. Just ensure that your VM and other resources are all within the same region. Within that RG, create a Windows 10 VM that has 2-4vCPUs. Name it "VM-osTicket". Create a username and password for the VM. For training purposes you can keep it basic. For the username I chose "labuser". 
 

@@ -9,17 +9,23 @@ osTicket is an open-source ticketing system used by businesses for managing cust
 + Internet Information Services (IIS)
 + Heidi SQL
 # Operating Systems Used
-+ Windows 10 (Build 19044)
++ Windows 10 (22H2)
 # List of Prerequisites
 + Azure Virtual Machine
 + osTicket Installation files
 # Installation Steps
-Within the Azure interface, create a resource group and name it "osTickets". I used the US East region but you can choose whichever one best fits your needs. Just ensure that your VM and other resources are all within the same region. Within that RG, create a Windows 10 VM that has 2-4vCPUs. Name it "VM-osTicket". 
-*pic of vm parameters*
-Create a username and password for the VM. For training purposes you can keep it basic. For the username I chose "labuser". Once the VM is deployed, we will connect to it using a Remote Desktop connection. From the Start menu, open up Remote Desktop Connection and connect to the VM that was created in Azure.
-*pic of remote desktop connection with vm selected*
+Within the Azure interface, create a resource group and name it "osTickets". I used the US East region but you can choose whichever one best fits your needs. Just ensure that your VM and other resources are all within the same region. Within that RG, create a Windows 10 VM that has 2-4vCPUs. Name it "VM-osTicket". Create a username and password for the VM. For training purposes you can keep it basic. For the username I chose "labuser". 
+
+<img width="949" alt="SS1" src="https://github.com/user-attachments/assets/6e62744a-5046-4b16-8133-e0d8731065ca" />
+
+Once the VM is deployed, we will connect to it using a Remote Desktop connection. First take note of your VM's public IP address. From the Start menuon your computer, open up Remote Desktop Connection and connect to the VM that was created in Azure. This can also be done within the Azure interface by navigating to the VM then select connect then Native RDP.
+
+<img width="916" alt="SS2" src="https://github.com/user-attachments/assets/304871b1-ddb1-4314-9552-ddf0646ddf9d" />
+
 After connecting, it's time to enable Internet Information Services (IIS). IIS is a web server for Windows that's used to exchange static and dynamic web content with internet users. It can be used to host, deploy, and manage different web applications. To enable IIS: Start Menu > Windows Features > Internet Information Services > World Wide Web Services > Application Development Features > CGI. CGI will be necessary for downloading the PHP Manager which will allow us to run osTicket within our IIS web server.
-*pic of windows features*
+
+<img width="675" alt="SS3" src="https://github.com/user-attachments/assets/c9a616ff-60fb-4b02-96d8-92f85eed0aad" />
+
 From within the installation folder, download the PHP manager file (PHPManagerForIIS_V1.5.0.msi). Run the installer and agree to all the terms. Follow the same steps now with the Rewrite Module file (rewrite_amd64_en-US.msi). 
 *pic of both installers*
 Create a directory named "C:\PHP" by opening the File Explorer. Navigate to the C:\ drive and right-click to create a new folder named "PHP". From within the Installation Files folder, download the zip file "php-7.3.8-nts-Win32-VC15-x86.zip". Extract the files to the PHP folder you just created. 

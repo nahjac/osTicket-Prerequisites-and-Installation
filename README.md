@@ -27,34 +27,59 @@ After connecting, it's time to enable Internet Information Services (IIS). IIS i
 <img width="675" alt="SS3" src="https://github.com/user-attachments/assets/c9a616ff-60fb-4b02-96d8-92f85eed0aad" />
 
 From within the installation folder, download the PHP manager file (PHPManagerForIIS_V1.5.0.msi). Run the installer and agree to all the terms. Follow the same steps now with the Rewrite Module file (rewrite_amd64_en-US.msi). 
-*pic of both installers*
+
+<img width="654" alt="SS4" src="https://github.com/user-attachments/assets/ca8d7f85-e826-4a70-8408-284d738de674" />
+<img width="614" alt="SS5" src="https://github.com/user-attachments/assets/a2cda90c-d21d-4296-b70b-215c312d1662" />
+
 Create a directory named "C:\PHP" by opening the File Explorer. Navigate to the C:\ drive and right-click to create a new folder named "PHP". From within the Installation Files folder, download the zip file "php-7.3.8-nts-Win32-VC15-x86.zip". Extract the files to the PHP folder you just created. 
-*pic of files extracted in php folder*
+
+<img width="728" alt="SS6" src="https://github.com/user-attachments/assets/f937a80c-1243-473c-94c6-dd040a95cd62" />
+
 Now, download and install the VC_redist executable file. Then you'll download and install MySQL (mysql-5.5.62-win32.msi). Allow typical setup and it will bring you to a page where you will create a username and password for the database you'll be using to store ticket information from oSTicket. To keep things simple I chose "root" for the username and "Password1" for the password. 
-*pic of creating username and pw*
-Now it's time to download oSTicket which is "osTicket-v1.15.8.zip" in the installation files folder. Once it's downloaded, extract the contents and copy the "upload" folder into C:\ inetpub\wwwroot. Then rename the copied folder "oSTicket". Now open the IIS Manager and restart the server.
-*pic of where to start and stop*
-On the left-hand side underneath Connections, select the VM > Sites > Default Web Site > oSTicket. On the right-hand side click "Browse *:80".
-*pic of this on the right side*
+
+<img width="547" alt="SS7" src="https://github.com/user-attachments/assets/ef982177-35f3-49d2-93c9-5b93808462e4" />
+
+Now it's time to download oSTicket which is "osTicket-v1.15.8.zip" in the installation files folder. Once it's downloaded, extract the contents and copy the "upload" folder into C:\ inetpub\wwwroot. Then rename the copied folder "osTicket". Now open the IIS Manager and restart the server.
+
+<img width="754" alt="SS8" src="https://github.com/user-attachments/assets/39c76ed2-2c8f-4483-949c-21de7ff742a3" />
+
+On the left-hand side underneath Connections, select the VM > Sites > Default Web Site > oSTicket. On the right-hand side click "Browse *:80". You should receive an error. This error is because there are some extensions we need to enable.
+
+<img width="788" alt="SS9" src="https://github.com/user-attachments/assets/d423f5df-e761-4aed-bcb1-98fabad5ccac" />
+
 Now we will enable extensions in IIS. While in IIS > Sites > Default Web Site > oSTicket, double-click PHP Manager. At the bottom click "Enable or Disable an Extension". Right-click and enable the extensions:
 + php_imap.dll
 + php_intl.dll
 + php_opcache.dll
-*pic of extensions enabled*
+
+<img width="733" alt="SS10" src="https://github.com/user-attachments/assets/d4d18c6d-43eb-4dd7-add3-4c006a72eb07" />
+
 Refresh the oSTicket site in your web browser and you should now see a green check next to Intl Extension. Now navigate to C:\inetpub\wwwroot\oSTicket\include\ost-sampleconfig.php and rename the file to C:\inetpub\wwwroot\oSTicket\include\ost-config.php.
-*pic of changing name*
+
+<img width="700" alt="SS11" src="https://github.com/user-attachments/assets/476b68aa-dbf6-4078-94e6-e8419ba00726" />
+
 Next, assign permissions to ost-config.php by right-clicking the file and open Properties > Security > Advanced > Permissions. Click Disable inheritance > Remove all inherited permissions from this object.
-*pic of removing inheritance*
+
+<img width="704" alt="SS12" src="https://github.com/user-attachments/assets/d11382f8-30bd-4dd4-ae00-a03464f97ed9" />
+
 While still in the Permissions settings of ost-config.php, click Add > Principal and type in "Everyone". Check the names then click OK. Allow everyone full control by ensuring all boxes are checked. Apply the changes.
-*pic*
-Now we will continue setting up osTicket from within the web browser using the following parameters.
-*pic of correct parameters (name: helpdesk email: helpdesk@osticket.com first: mary last: jane email: admin@osticket.com username: user_admin password: Password1*
-Now let's download and install HeidiSQL (HeidiSQL_12.3.0.6589_Setup.exe). HeidiSQL is an open-source admin tool for managing databases. We'll be using it to manage MORE. User: root Password: Password1. Select Open and on the left side right-click Unnamed > Create New > Database. Name it osTicket and click OK.
-*pic of renaming it*
+
+<img width="737" alt="SS13" src="https://github.com/user-attachments/assets/8fbc7f58-bd15-4677-aa5f-bfa634d6f287" />
+
+Now we will continue setting up osTicket from within the web browser using the following parameters:
+
+<img width="819" alt="SS14" src="https://github.com/user-attachments/assets/02afb294-81ed-4097-95d7-b4a3cb896922" />
+
+Before we finish installing osTicket, lets setup our database. First, let's download and install HeidiSQL (HeidiSQL_12.3.0.6589_Setup.exe) from the provided installations folder. HeidiSQL is an open-source admin tool for managing databases. After it finishes installing, open HeidiSQL and create a new session. User: root Password: Password1. Select Open and on the left side right-click Unnamed > Create New > Database. Name it osTicket and click OK.
+
+<img width="766" alt="SS15" src="https://github.com/user-attachments/assets/cba7cd3b-9fde-4d76-982f-7b7f1613b271" />
+
 Let's finish setting up osTicket. In the web browser finish filling out the fields:
-*pic of correct parameters (MYSQL Database: osTicket (that you just created in heidi) MYSQL username: root MySQL pw: Password1)
-Finish by clicking "Install Now".
-Congrats! osTicket has been successfully installed.
-Don't forget to complete some post-installation cleanup. First, delete C:\inetpub\wwwroot\osTicket\setup. Next, navigate to C:\inetpub\wwwroot\osTicket\include. Right-click on ost-config.php and select Security > Advanced > "everyone" > edit to change permissions. Allow everyone to only have read and execute permissions.
-*pic of read and execute permissions*
+
+<img width="752" alt="SS16" src="https://github.com/user-attachments/assets/394a7047-e064-43f1-b8cc-feb334f0fd44" />
+
+Finish by clicking "Install Now". Congrats! osTicket has been successfully installed. Don't forget to complete some post-installation cleanup. First, delete C:\inetpub\wwwroot\osTicket\setup. Next, navigate to C:\inetpub\wwwroot\osTicket\include. Right-click on ost-config.php and select Security > Advanced > "everyone" > edit to change permissions. Allow everyone to only have read and execute permissions.
+
+<img width="771" alt="SS17" src="https://github.com/user-attachments/assets/ecfa8ba5-bb41-41b9-94b0-722cb261bfd5" />
+
 For information on post-installation configuration, see pt. 2 [here](https://github.com/nahjac/osTicket-Post-Installation-Configuration).
